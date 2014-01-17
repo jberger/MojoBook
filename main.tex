@@ -1,7 +1,8 @@
+\documentclass{book}
+
 %This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 United States License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/us/ or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
-
-\documentclass{book}
+\usepackage{import}
 
 \usepackage{hyperref}
 \usepackage{url}
@@ -33,9 +34,7 @@ Mountain View, CA, 94041, USA.
 
 \tableofcontents
 
-\chapter{Getting Started}
-  \include{installation}
-  \include{deployment}  
+\subimport{getting_started/}{main}
 
 \end{document}
 
