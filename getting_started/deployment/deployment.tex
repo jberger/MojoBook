@@ -92,7 +92,7 @@ Most major Perl frameworks have ported to only act in a PSGI compliant manner, a
 Unfortunately, PSGI does not define a real-time API and thus Mojolicious is not a pure PSGI framework.
 That said, it can act in a PSGI compliant manner, and will do so when deploying via a PSGI server.
 To see that, we can run our app using the reference implementation called \verb!Plack!, and its server \verb!plackup!, by running \verb!plackup myapp.pl!.
-To try the Mojolicious built-in app under \verb!plackup!, try \verb!plackup $(which mojo)!.
+To try the Mojolicious built-in app under \verb!plackup!, try \lstbash!plackup `which mojo`!.
 
 While you lose the real-time features of Mojolicious when using a PSGI server, you gain the use of the plack middlewares.
 %TODO include middleware example
@@ -110,7 +110,11 @@ There are plenty of online resources that will help you find your way.
 \subsection{Via the command line}
 
 Finally, and though this will be covered in more detail later, your app be directly invoked on the command line with the \verb!get! command.
-If your application defines the \verb!/path/page.html! resource, you can simply run \verb!./myapp.pl get /path/page.html! to see the output on your terminal.
+If your application defines the \verb!/path/page.html! resource, you can simply run 
+\begin{bash}
+./myapp.pl get /path/page.html
+\end{bash}
+to see the output on your terminal.
 This is great for debugging!
 The \verb!get! command is actually even more powerful than this, but let's save that for later.
 %TODO include link to get command

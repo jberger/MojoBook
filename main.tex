@@ -10,6 +10,20 @@
 \usepackage{graphicx}
 \DeclareGraphicsExtensions{.png,.pdf,.jpg}
 
+\usepackage{textcomp}
+\usepackage{listings}
+
+\lstloadlanguages{perl,bash}
+
+\lstdefinestyle{perl}{language=perl, upquote=true}
+\lstdefinestyle{bash}{language=bash, upquote=true, basicstyle=\ttfamily, xleftmargin=\parindent}
+
+\lstnewenvironment{perl}{\lstset{style=perl}}{}
+\lstnewenvironment{bash}{\lstset{style=bash}}{}
+
+\newcommand\lstperl{\lstinline[style=perl]}
+\newcommand\lstbash{\lstinline[style=bash]}
+
 \title{The Mojolicious Book}
 \author{Joel Berger}
 
