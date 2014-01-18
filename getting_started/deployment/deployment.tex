@@ -30,10 +30,10 @@ In order to use Mojolicious' real-time features, like WebSockets for example,
 %TODO link to websocket chapter
 you will need to use one of the built-in servers.
 
-To start the daemon, simply pass \verb!daemon! as a command line argument to your script (i.e. \verb!app.pl daemon!). 
+To start the daemon, simply pass \verb!daemon! as a command line argument to your script (i.e. \lstbash!./app.pl daemon!). 
 This will start your application using the daemon and bind it to port 3000.
-The daemon has serveral options, which may be displayed by running \verb!app.pl help daemon!.
-See them now by running \verb!mojo help daemon!.
+The daemon has serveral options, which may be displayed by running \lstbash!./app.pl help daemon!.
+See them now by running \lstbash!mojo help daemon!.
 
 \subsubsection{morbo}
 
@@ -43,10 +43,10 @@ Morbo is a wrapper around the daemon, with all of its same capabilites, but with
 it restarts itself automatically whenever one of your application's files change!
 
 Unlike the daemon, which is started as an argument to your application script, morbo is its own script.
-To start your application using morbo, pass the script as an argument to the \verb!morbo! command (i.e. \verb!morbo app.pl!).
+To start your application using morbo, pass the script as an argument to the \verb!morbo! command (i.e. \lstbash!morbo app.pl!).
 
 Morbo allows some, but not necessarily all, of the same options as daemon, and provides some of its own.
-To see them all, run \verb!morbo --help!.
+To see them all, run \lstbash!morbo --help!.
 The most useful of these options is the \verb!--watch! or \verb!-w! flag.
 By default, morbo will watch all of the files that it can understand to be part of your application,
 still there may be times when you have more files whose change should trigger a restart of the server.
@@ -91,7 +91,7 @@ Most major Perl frameworks have ported to only act in a PSGI compliant manner, a
 
 Unfortunately, PSGI does not define a real-time API and thus Mojolicious is not a pure PSGI framework.
 That said, it can act in a PSGI compliant manner, and will do so when deploying via a PSGI server.
-To see that, we can run our app using the reference implementation called \verb!Plack!, and its server \verb!plackup!, by running \verb!plackup myapp.pl!.
+To see that, we can run our app using the reference implementation called \verb!Plack!, and its server \verb!plackup!, by running \lstbash!plackup myapp.pl!.
 To try the Mojolicious built-in app under \verb!plackup!, try \lstbash!plackup `which mojo`!.
 
 While you lose the real-time features of Mojolicious when using a PSGI server, you gain the use of the plack middlewares.
