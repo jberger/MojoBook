@@ -1,0 +1,17 @@
+\section{Your First Lite App}
+
+%XXX consider making an architecture section
+
+When designing a Mojolicious application, authors usually follow the accepted Model-View-Controller architecture.
+%TODO external links to MVC
+The model layer is intentionally unspecified.
+Perl, and its massive CPAN (see \url{http://metacpan.org} for more) have many options for database interaction.
+%TODO link could be a footnote
+Mojolicious is agnostic to the Model layer, though some suggestions for useful modules are \cpan{DBIx::Connector} for connection management or \cpan{DBIx::Class} as an ORM.
+%TODO ext link about ORM
+Also worthy of a mention is the Mojolicious spin-off project \cpan{Mango}, a non-blocking interface to MongoDB.
+
+Mojolicious applications typically are a well structured set of files, defining Perl classes, templates, tests and other supporting files.
+These classes represent your application and its controllers, in addition to any model logic that you might include.
+%TODO links to both here
+While using this full structure is highly encouraged for production, for fast prototyping, and especially for presenting examples, this structure becomes cumbersome.
