@@ -15,16 +15,41 @@
 
 \lstloadlanguages{perl,bash}
 
-\lstdefinestyle{perl}{language=perl, upquote=true}
+\usepackage[usenames,dvipsnames]{color}
+
+%\definecolor{light-gray}{gray}{0.95}
+
+\lstdefinestyle{perl}{
+  language=perl, 
+  upquote=true,
+  showstringspaces=false,
+  basicstyle={\footnotesize\ttfamily}, 
+  xleftmargin=\parindent,
+  commentstyle={\textcolor{red}},
+  stringstyle={\textcolor{OliveGreen}},
+  keywordstyle={\textcolor{NavyBlue}}
+  %backgroundcolor={\color{light-gray}}
+}
+\lstdefinestyle{mojolite}{
+  style=perl,
+  morekeywords=[2]{
+    any,get,options,patch,post,put,websocket,del,
+    app,group,helper,hook,plugin,under
+  },
+  keywordstyle=[2]{\textcolor{Bittersweet}}
+}
 \lstdefinestyle{bash}{language=bash, upquote=true, basicstyle=\ttfamily, xleftmargin=\parindent}
 
 \lstnewenvironment{perl}{\lstset{style=perl}}{}
+\lstnewenvironment{mojolite}{\lstset{style=mojolite}}{}
 \lstnewenvironment{bash}{\lstset{style=bash}}{}
 
 \newcommand\lstperl{\lstinline[style=perl]}
 \newcommand\lstbash{\lstinline[style=bash]}
 
 \providecommand{\cpan}[1]{\href{http://metacpan.org/module/#1}{{\tt #1}}}
+
+\renewcommand{\underbar}[1]{{#1}}
 
 \title{The Mojolicious Book}
 \author{Joel Berger}

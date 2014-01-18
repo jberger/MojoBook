@@ -15,3 +15,17 @@ Mojolicious applications typically are a well structured set of files, defining 
 These classes represent your application and its controllers, in addition to any model logic that you might include.
 %TODO links to both here
 While using this full structure is highly encouraged for production, for fast prototyping, and especially for presenting examples, this structure becomes cumbersome.
+
+Luckily, Mojolicious comes with tiny wrapper layer called Mojolicious::Lite.
+This module provides a functional dsl wrapping routing methods and helpers --- which will be discussed in due course --- so that simple applications can be defined in a single script.
+With this sugar, a ``hello world'' app looks something like this:
+\begin{mojolite}
+#!/usr/bin/env perl
+use Mojolicious::Lite;
+
+any '/' => sub { shift->render( text => 'hello world' ) };
+
+app->start;
+\end{mojolite}
+
+
