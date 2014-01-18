@@ -21,6 +21,7 @@
 
 \lstdefinestyle{perl}{
   language=perl, 
+  deletekeywords={delete}, %this keyword is more confusing than helpful in mojo context
   upquote=true,
   showstringspaces=false,
   basicstyle={\footnotesize\ttfamily}, 
@@ -45,6 +46,7 @@
 \lstnewenvironment{bash}{\lstset{style=bash}}{}
 
 \newcommand\lstperl{\lstinline[style=perl]}
+\newcommand\lstmojolite{\lstinline[style=mojolite]}
 \newcommand\lstbash{\lstinline[style=bash]}
 
 \providecommand{\cpan}[1]{\href{http://metacpan.org/module/#1}{{\tt #1}}}
