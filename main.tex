@@ -33,6 +33,7 @@
   % keywordstyle={\textcolor{NavyBlue}}
   % backgroundcolor={\color{light-gray}}
 }
+
 \lstdefinestyle{mojolite}{
   style=perl,
   morekeywords=[2]{
@@ -41,7 +42,16 @@
   },
   % keywordstyle=[2]{\textcolor{Bittersweet}}
 }
-\lstdefinestyle{bash}{language=bash, upquote=true, basicstyle=\ttfamily, xleftmargin=\parindent}
+
+\lstdefinestyle{bash}{
+  style=code,
+  language=bash, 
+  numbers=none,
+  frame=none,
+  % upquote=true, 
+  basicstyle=\footnotesize\ttfamily, 
+  % xleftmargin=\parindent
+}
 
 \lstnewenvironment{perl}{\lstset{style=perl}}{}
 \lstnewenvironment{mojolite}{\lstset{style=mojolite}}{}
