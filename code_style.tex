@@ -16,23 +16,33 @@
 \definecolor{solarized@blue}{HTML}{268BD2}
 \definecolor{solarized@cyan}{HTML}{2AA198}
 \definecolor{solarized@green}{HTML}{859900}
- 
-\lstdefinestyle{solarized}{
+
+\lstdefinestyle{code}{
   upquote=true,
   columns=fixed,
   tabsize=2,
   extendedchars=true,
+  showstringspaces=false,
   breaklines=true,
-  %numbers=left,
-  %numbersep=5pt,
-  xleftmargin=5pt,
-  framexleftmargin=5pt,
-  backgroundcolor=\color{solarized@base03},
-  numberstyle=\tiny\color{solarized@base01},
+  numbers=left,
+  % numbersep=5pt,
+  frame=single,
+  xleftmargin=15pt,
+  xrightmargin=10pt,
+  % framexleftmargin=5pt,
+}
+
+\lstdefinestyle{solarized}{
+  style=code,
+  % backgroundcolor=\color{solarized@base03},
+  numberstyle=\color{solarized@base01}\footnotesize\ttfamily,
   basicstyle=\color{solarized@base01}\footnotesize\ttfamily,
   keywordstyle=\color{solarized@green},
-  stringstyle=\color{solarized@cyan}\ttfamily,
+  keywordstyle=[2]{\color{solarized@orange}},
+  stringstyle=\color{solarized@cyan},
   identifierstyle=\color{solarized@blue},
-  commentstyle=\color{solarized@orange},
+  % commentstyle=\color{solarized@orange},
+  commentstyle=\footnotesize\ttfamily,
   emphstyle=\color{solarized@red}
 }
+

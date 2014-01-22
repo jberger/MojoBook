@@ -18,18 +18,20 @@
 \usepackage[usenames,dvipsnames]{color}
 
 %\definecolor{light-gray}{gray}{0.95}
+\input{code_style}
 
 \lstdefinestyle{perl}{
+  style=solarized,
   language=perl, 
   deletekeywords={delete}, %this keyword is more confusing than helpful in mojo context
-  upquote=true,
-  showstringspaces=false,
-  basicstyle={\footnotesize\ttfamily}, 
-  xleftmargin=\parindent,
-  commentstyle={\textcolor{red}},
-  stringstyle={\textcolor{OliveGreen}},
-  keywordstyle={\textcolor{NavyBlue}}
-  %backgroundcolor={\color{light-gray}}
+  % upquote=true,
+  % showstringspaces=false,
+  % basicstyle={\footnotesize\ttfamily}, 
+  % xleftmargin=\parindent,
+  % commentstyle={\textcolor{red}},
+  % stringstyle={\textcolor{OliveGreen}},
+  % keywordstyle={\textcolor{NavyBlue}}
+  % backgroundcolor={\color{light-gray}}
 }
 \lstdefinestyle{mojolite}{
   style=perl,
@@ -37,7 +39,7 @@
     any,get,options,patch,post,put,websocket,del,
     app,group,helper,hook,plugin,under
   },
-  keywordstyle=[2]{\textcolor{Bittersweet}}
+  % keywordstyle=[2]{\textcolor{Bittersweet}}
 }
 \lstdefinestyle{bash}{language=bash, upquote=true, basicstyle=\ttfamily, xleftmargin=\parindent}
 
