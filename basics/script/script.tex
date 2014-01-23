@@ -1,0 +1,14 @@
+\section{The Application Script}
+
+In any Mojolicious application, there will always one application script.
+Its existance is the only necessary requirement in a Mojolicious application.
+This script is used to start and stop the app.
+It can be used to perform querys about your app, like which routes are available, request a given resource/page or even evalutate code against a running app!
+
+The script can come in one of two forms, depending on whether your application is a full or lite app.
+A full application needs a only small script which is simply used to bootstrap the main application class.
+In contrast, the script for a lite app might be the entire application, including route definitions, actions, and templates.
+
+In concept the two types of applications are not all that different.
+It is not tremendously incorrect to imagine that a lite application is simply the \lstperl!startup! method of a full application, with a simple domain specific language (dsl) for sugar.
+For now, this text will focus on lite apps to get started, just remember that there is nothing magical about lite apps (see Section \ref{sec:lite_not_magical}).
