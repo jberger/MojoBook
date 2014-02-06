@@ -1,21 +1,33 @@
 \section{Components of a Mojolicious Application}
 
+Before you dive into writing your Mojolicous application, lets take a minute to take a high-level look at the architecture.
+Being aware of these few concepts will prevent lots of confusion down the road.
+
+When designing a Mojolicious application, authors usually follow the accepted Model-View-Controller architecture.
+%TODO external links to MVC
+The model layer is intentionally unspecified.
+Perl, and its massive CPAN (see \url{http://metacpan.org} for more) have many options for database interaction.
+%TODO link could be a footnote
+Mojolicious is agnostic to the Model layer, though some suggestions for useful modules are \cpan{DBIx::Connector} for connection management or \cpan{DBIx::Class} as an ORM.
+%TODO ext link about ORM
+Also worthy of a mention is the Mojolicious spin-off project \cpan{Mango}, a non-blocking interface to MongoDB.
+
 \subsection{Classes and Methods}
 
 A Mojolicious application is the sum of many components.
-You will write an application class and action methods.
-These action methods may be contained in controller classes or anonymous methods.
+At a minimum, you will write an application class and action methods.
+These action methods may be anonymous methods or may be contained in controller classes.
 
 A primary task of the application class is to set up the router.
 Each application object has a router object.
 Using the router you can attach routes (urls) to the action methods.
 When a client requests a certain url, matching one of the routes, the router will invoke the method to build the response.
 
+\subsection{Data and Logic}
+
 While these action methods can build the response body themselves, if your application is going to serve HTML, you will most likely also define templates.
 The application object has a renderer object whose job it is to take data from the action, render a given template using that data and return it to the action.
 Mojolicious has its own templating language that is very Perly, though you can use your favorite engine if you prefer.
-
-\subsection{Data and Logic}
 
 At the heart of each request cycle is a special hash, called the stash.
 This stash is the data that is passed between the action method (really the controller object) and the renderer.
@@ -48,5 +60,12 @@ All applications need a script file to invoke the application.
 Especially when prototyping, you can contain your entire application (sans tests) inside your application script.
 The Mojolicious::Lite domain specific language (DSL) makes this easy.
 
-Once your app gets large, however, you will want to split into maintainable modules.
+Once your app gets large, however, you will want to split it into separate maintainable modules.
 In this case, the script is just a few lines used to load the application class and start it.
+
+The script does more than just start the web server, however.
+Your application script is the entry point for running commands against your application.
+You can see which routes are defined or request a page for quick checks.
+More interestingly, you can run code against the application, perhaps to use one of your helpers to run a query to the database.
+You can even write your own commands, say for configuration, installation or administration.
+
