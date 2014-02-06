@@ -33,10 +33,9 @@ At the heart of each request cycle is a special hash, called the stash.
 This stash is the data that is passed between the action method (really the controller object) and the renderer.
 Certain stash keys have specific meanings withing the cycle, like \verb!format!, but for the most part, you can store any information you need to keep during the process of building the response.
 
-The stash allows the sharing of data between different components during the request cycle.
-To share logic between different components, you can write helper methods.
+While the stash allows the sharing of data between different components during the request cycle, to share logic between different components, you can write helper methods.
 Helper methods are special methods which can be called as methods on the application object and controller objects (including inside anonymous action methods).
-Helpers are also available as function inside your templates!
+Helpers are also available as functions inside your templates!
 In fact the stash data is passed between components via the \verb!stash! helper.
 
 Helpers may do many useful things like provide database access, build HTML tags, parse documents.
