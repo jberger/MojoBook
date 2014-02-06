@@ -1,0 +1,52 @@
+\section{Components of a Mojolicious Application}
+
+\subsection{Classes and Methods}
+
+A Mojolicious application is the sum of many components.
+You will write an application class and action methods.
+These action methods may be contained in controller classes or anonymous methods.
+
+A primary task of the application class is to set up the router.
+Each application object has a router object.
+Using the router you can attach routes (urls) to the action methods.
+When a client requests a certain url, matching one of the routes, the router will invoke the method to build the response.
+
+While these action methods can build the response body themselves, if your application is going to serve HTML, you will most likely also define templates.
+The application object has a renderer object whose job it is to take data from the action, render a given template using that data and return it to the action.
+Mojolicious has its own templating language that is very Perly, though you can use your favorite engine if you prefer.
+
+\subsection{Data and Logic}
+
+At the heart of each request cycle is a special hash, called the stash.
+This stash is the data that is passed between the action method (really the controller object) and the renderer.
+Certain stash keys have specific meanings withing the cycle, like \verb!format!, but for the most part, you can store any information you need to keep during the process of building the response.
+
+The stash allows the sharing of data between different components during the request cycle.
+To share logic between different components, you can write helper methods.
+Helper methods are special methods which can be called as methods on the application object and controller objects (including inside anonymous action methods).
+Helpers are also available as function inside your templates!
+In fact the stash data is passed between components via the \verb!stash! helper.
+
+Helpers may do many useful things like provide database access, build HTML tags, parse documents.
+You will typically write your helpers as part of your application class.
+
+Once you have enough helpers, you might want to factor them out into bundle, something we call a plugin class.
+In fact, plugins are the primary method of logic reuse between applications, and many can be found on CPAN.
+Among the plugins to be found on CPAN are those for handling authentication, interact with web services, connect to certain databases, handle encryption, etc etc.
+Plugins are usually loaded in the application class, alongside the definition of your own helpers.
+
+\subsection{Tests}
+
+Of course you will also want to test your application.
+Mojolicious contains amazingly powerful testing tools.
+When testing, you can easily spin up a local instance of your application, request pages and perform dozens of provided web-specific tests on the response.
+The tests can use CSS selectors, like you might be used to from jQuery, in order to focus on specific parts of the response without resorting to parsing the response yourself.
+
+\subsection{The Application Script}
+
+All applications need a script file to invoke the application.
+Especially when prototyping, you can contain your entire application (sans tests) inside your application script.
+The Mojolicious::Lite domain specific language (DSL) makes this easy.
+
+Once your app gets large, however, you will want to split into maintainable modules.
+In this case, the script is just a few lines used to load the application class and start it.
