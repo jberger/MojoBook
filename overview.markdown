@@ -77,7 +77,9 @@ It lets the app set the response status code and format.
 It can define rendering parameters including complex template inheritances and many other behaviors.
 
 When defining a route in a Lite application (or using a "hybrid route") simply pass a hash reference to the route definition after the path; this will be used as the starting point for the initial stash.
-This can be seen in the first Mojolicious application a new user will write is a "hello world".
+(In a full application, you can set the the stash defaults with the curiously named `to` method.)
+
+Using route stash defaults is seen in the first Mojolicious application a new user will write: the "hello world" application.
 In the Mojolicious version of this famous application (one which just says "hello world" to the client), you see the first use of the stash in this way.
 
 ```perl
