@@ -64,3 +64,65 @@ Although normally a response is sent to the client all at once (a simple reply),
 Remember that Mojolicious is built to be nonblocking and therefore all data must be contained on an instance of an object rather than in global variables.
 The three most important data containers are the transaction (`$c->tx`), the stash (`$c->stash`) and the session (`$c->session`), of which, the transaction has already been discussed.
 
+### The Stash
+
+As seen before, the data representing the incoming request and the outgoing response are stored on the transaction object's messages.
+But during the request it can be handy to hold temporary "scratch pad" kind of information for your own use.
+Each controller instance, representing a single client request, contains within it a hash reference called the stash.
+At first glance this stash is just a scratch pad, and certainly it can be used that way, but it is really much more.
+
+The stash receives the placholder values from the routes.
+It defines the controller class and action to dispatch to and/or the template to render.
+It lets the app set the response status code and format.
+It can define rendering parameters including complex template inheritances and many other behaviors.
+
+When defining a route in a Lite application (or using a "hybrid route") simply pass a hash reference to the route definition after the path; this will be used as the starting point for the initial stash.
+This can be seen in the first Mojolicious application a new user will write is a "hello world".
+In the Mojolicious version of this famous application (one which just says "hello world" to the client), you see the first use of the stash in this way.
+
+```perl
+use Mojolicious::Lite;
+
+get '/' => { text => 'Hello world!' };
+
+app->start;
+```
+
+This app defines a handler for an HTTP GET request to the `/` path and tells the router to set the default stash for this request to contain a key of `text` with the value of the message to be replied.
+Since there is no dynamic behavior, the controller object is never seen, but it exists and it sees the `text` key in the stash and uses it to render the response to the client.
+
+In a full application, the stash defaults often contain `controller` and `action` which tell the router which controller class to instantiate and which method to dispatch to.
+Other common stash keys include `status` to specify the status code, `format` to set the `Content-Type` header for known types, and `json` to automatically render a data structure as a JSON document (which knows to set the format to json).
+
+The "hello world" example above actually set the `Content-Type` to `text/html` since that is the default.
+This may seem strange, but consider the case of manually creating html.
+One might as well render `<html><head><title>Hello world!</title></head><body><h1>Hello world!</h1></body></html>` as text.
+Rather than the initial assumption that the `text` stash value means that you want to render raw text, it really means that you are rendering textual data.
+That textual data is encoded as utf8 before being sent to the client.
+
+To demonstrate this, the following example renders unicode text and also sets the format to `txt` so that the `Content-Type` is `text/plain`.
+
+```perl
+use Mojolicious::Lite;
+
+get '/' => { text => 'Hello 🌎!', format => 'txt' };
+
+app->start;
+```
+
+If instead the data should not be encoded as utf8, use the `data` key instead, as is the case of this base64 encoded one black pixel gif.
+
+```perl
+use Mojolicious::Lite;
+use Mojo::Util 'b64_decode';
+
+get '/' => {
+  data   => b64_decode 'R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=',
+  format => 'gif',
+};
+
+app->start;
+```
+
+Of course Mojolicious has better ways of rendering base64 encoded files and static files in general.
+
