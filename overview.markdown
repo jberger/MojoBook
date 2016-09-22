@@ -1,5 +1,14 @@
 ## Overview
 
+In order to get started, I think it is important to cover some high-level concepts that will be very common throughout the duration of this series.
+I will only assume that you have a very basic understanding of how the HTTP request/response cycle works.
+
+In attempting to teach any large subject, it can be tricky to know in which order to teach the concepts.
+Sometimes you can't teach one concept without another and vice versa.
+Rather than get stuck in trying to derive everything from first principals, I might on occaison use a concept that hasn't been introduced first.
+Don't worry if you don't understand everything mentioned here, each concept will be explained again, sometimes repeatedly.
+I'll try to keep those cases to a minumum.
+
 ### The Relationship Between Mojo and Mojolicious
 
 While the names Mojo and Mojolicious get used almost interchangably in common usage they are very distinct in a technical sense.
