@@ -22,7 +22,7 @@ However Mojolicious is actually a subclass of the basic web application, Mojo.
 Mojo is a low-level web application "framework".
 At a basic level a Mojo application implements a method called `handler`.
 When a Mojo::Server (or subclass) gets a new request, it builds a Mojo::Transaction (technially it asks your app to to so, but this is usually pretty transparent).
-The message parsing is done at this level, creating Mojo::Message instances for the request and the response.
+The message parsing is done at this level, creating instances of subclasses of Mojo::Message for the request and the response.
 Then the server calls your application's `handler` method with that transaction as an argument.
 
 What the Mojolicious class does is implement this handler method in such a way as to provide the rich api that Mojolicious authors experience.
@@ -31,12 +31,12 @@ The stash, flash, sessions and renderer are all implemented at the Mojolicious l
 
 If you are still confused, remember the following.
 It is common for Mojolicious-level classes to build and use objects from the Mojo namespace.
-Mojo-level classes never build Mojolicious level classes.
+Mojo-level classes never build Mojolicious-level classes.
 
 ### The Transaction Object
 
 When the server gets a request from its TCP socket, the first thing it does is get a Mojo::Transaction object to represent it.
-For consistency, all classes in the Mojo echosystem that hold a transaction store it in an attribute called `tx`.
+For consistency, all classes in the Mojo ecosystem that hold a transaction store it in an attribute called `tx`.
 Additionally, by convention a variable that contains a transaction is called `$tx`.
 
 This object is a container holding both a Mojo::Message::Request (`$tx->req`) and a Mojo::Message::Response (`$tx->res`), both of which are subclasses of Mojo::Message.
