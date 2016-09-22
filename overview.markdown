@@ -181,6 +181,33 @@ Never store passwords in a session!
 Also, session cookies are limited in the same way that cookies are, most notably there is a size limit of 4kB in serialized form.
 If your application needs large amounts of session state, store a lookup id in the session storage and use it to lookup data in a database instead.
 
+### The Command System
+
+Mojolicious contains a powerful command system which builds command line applications to support it.
+First and foremost, there needs to be a way to start the server; a web application isn't worth very much if it can't run.
+One method of starting a Mojolicious web application as a server is to run `$ ./myapp.pl daemon`.
+
+There are many other useful commands too.
+During development, commands can be invaluable to introspect and debug quickly.
+Check that the routing table contains the route you are trying to hit: `$ ./myapp.pl routes`.
+Check that you get the result you expect from a page without starting a server or switching to a browser: `$ ./myapp.pl get /`.
+You can even run one-off commands against the application using the `eval` command.
+For example if you want to see what the path is to the applcation logger you can run `$ ./myapp.pl eval -v 'app->log->path'`.
+Once you start using these commands as part of your development process you will wonder how you ever developed without them.
+I will make use of them throughout this series.
+
+The command system is very extensible.
+Additional commands can be installed from CPAN.
+Plugins might add commands to an individual app or some commands might be available to them all once installed.
+Most importantly, you can add your own commands.
+
+Imagine the number of administration scripts that surround a usual web application.
+Deployment, monitoring, maintenance, etc.
+Each one usually contains some amount of copied code from the main application.
+For example to load configuration or to make database connections; to load model classes or shared functionality.
+By replacing these scripts with commands, the application is already available!
+If the application knwos how to connect to a database then your command does too!
+
 ### Batteries Included
 
 Mojolicious is more than just about routing requests and generating responses.

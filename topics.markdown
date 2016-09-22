@@ -12,3 +12,4 @@ A list of topics, in some general order, though probably not exact
 - [ ] Nonblocking Mojo::UserAgent and Mojo::IOLoop::Delay
 - [ ] Streaming Responses and WebSockets
 - [ ] Writing Non-blocking Methods
+- [ ] Writing Commands
