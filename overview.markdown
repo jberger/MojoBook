@@ -2,6 +2,9 @@
 
 In order to get started, I think it is important to cover some high-level concepts that will be very common throughout the duration of this series.
 I will only assume that you have a very basic understanding of how the HTTP request/response cycle works.
+Namely that a client requests certain data from a server, which then prepares and sends a response back.
+The request contains information like a path, some headers, perhaps some query arguments, and possibly a body.
+The response contains a status code, some more headers, and perhaps a body of its own.
 
 In attempting to teach any large subject, it can be tricky to know in which order to teach the concepts.
 Sometimes you can't teach one concept without another and vice versa.
