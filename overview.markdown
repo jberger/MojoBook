@@ -193,6 +193,70 @@ Never store passwords in a session!
 Also, session cookies are limited in the same way that cookies are, most notably there is a size limit of 4kB in serialized form.
 If your application needs large amounts of session state, store a lookup id in the session storage and use it to lookup data in a database instead.
 
+### Non-blocking Architecture
+
+Most web frameworks are procedural, they follow a certain set of steps in order from the beginning to the end of the request.
+A major factor that sets Mojolicious apart from other Perl web frameworks is that it is built upon a non-blocking event loop instead.
+If you write your web applications to take advantage of this fact, then it doesn't need to site idle while waiting on external resources.
+
+For example, let's say your application has a reporting endpoint that aggregates lots of data from the database; the query is database-side but it takes a long time to generate and respond.
+In a procedural framework, the server simply waits for the database to respond.
+If another request come in in the meantime, it has to wait.
+In practice this is solved with preforking web servers, in which many server processes handle requests allowing for many of them to be blocked.
+For a large application, this leads to a hardware arms-race, attacking the problem with more and more memory or eventually with more and more servers.
+This is frustrating because extra hardware is being used to support the web application *not doing anything*.
+
+Mojolicious can be, and indeed usually is, used in a procedural style.
+Let me, first show you what this example might look like procedurally.
+
+```perl
+use Mojolicious::Lite;
+use Mojo::Pg;
+
+helper pg => sub { state $pg = Mojo::Pg->new('postgresql://user:pass@/dbname') };
+
+get '/report' => sub {
+  my $c = shift;
+  my $result = $c->pg->db->query('SELECT report FROM generate_report()');
+  $c->render(text => $result->hash->{report});
+};
+
+app->start
+```
+
+In a non-blocking framework, when an external resource needs to be waited upon, the application can start the request and schedule code to run when it is complete.
+This deferred code is called a callback; in Perl these callbacks are subroutine references, usually anonymous ones.
+This callback represents the continuation of the original client request.
+The style of handing off code to be done later is called "continuation passing," which is the most common form of non-blocking architecture.
+
+To revisit the earlier example, the application now tells the event system to only render after the request has completed.
+It does so by passing the callback that should be run after the database result is received.
+The arguments to the callback are called its signature.
+In this example the arguments are the database object, any error that occurred, and the result itself.
+When the callback is called, it responds back to the original client.
+
+```perl
+use Mojolicious::Lite;
+use Mojo::Pg;
+
+helper pg => sub { state $pg = Mojo::Pg->new('postgresql://user:pass@/dbname') };
+
+get '/report' => sub {
+  my $c = shift;
+  my $result = $c->pg->db->query('SELECT report FROM generate_report()', sub {
+    my ($db, $err, $result) = @_;
+    $c->render(text => $result->hash->{report});
+  });
+};
+
+app->start
+```
+
+Easy right?!
+No?
+Ok that was a lot to take in, so don't try, we will cover it all again later.
+For the majority of this series, we will be discussing procedural code.
+
 ### The Command System
 
 Mojolicious contains a powerful command system which builds command line applications to support it.
@@ -220,7 +284,7 @@ For example to load configuration or to make database connections; to load model
 By replacing these scripts with commands, the application is already available!
 If the application knwos how to connect to a database then your command does too!
 
-### Batteries Included
+### Testing: Batteries Included
 
 Mojolicious is more than just about routing requests and generating responses.
 Mojo comes bundled with lots of additional functionality to get you off and running quickly.
