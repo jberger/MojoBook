@@ -181,4 +181,15 @@ Never store passwords in a session!
 Also, session cookies are limited in the same way that cookies are, most notably there is a size limit of 4kB in serialized form.
 If your application needs large amounts of session state, store a lookup id in the session storage and use it to lookup data in a database instead.
 
+### Batteries Included
+
+Mojolicious is more than just about routing requests and generating responses.
+Mojo comes bundled with lots of additional functionality to get you off and running quickly.
+These include Mojo::UserAgent a non-blocking http client, Mojo::DOM a DOM parser with CSS3 selectors, Mojo::JSON for JSON parsing and emitting, and many others.
+These tools have lots of uses, and they all designed for consistent api and user experience, but I'll argue that they shine best in the testing library Test::Mojo.
+
+Modern web applications must be well tested to ensure that it does what you expect, both now and in the future.
+Test::Mojo uses the power of these batteries-included libraries to provide a rich and powerful testing environment for your application and even other websites.
+In fact, because I consider testing to be so important, in the next chapters, before I really even get to the web framework, I will introduce some of these additional libraries.
+In this way, when we get to learning the how to write a web application, we can learn to test it at the same time.
 
