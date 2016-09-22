@@ -128,3 +128,57 @@ app->start;
 
 Of course Mojolicious has better ways of rendering base64 encoded files and static files in general.
 
+### The Session
+
+So, the stash is the place to store scratch-pad data during a request/response cycle.
+It has one weakness though, after the cycle ends, the stash goes away.
+It would have to, it is stored on the controller object which also goes away at that point.
+What is missing is a way to store data across multiple requests.
+
+Of course this mirrors the fact that HTTP is a stateless protocol.
+By design you are simply asking for certain data and a server responds to you with some result.
+At this point the request is over, maybe even the connection is closed.
+In fact, even if the server did try to save some state information about your last request, on the next request you might not even hit the same server again!
+
+Web applications have gotten around this limitation by sending state information back to th client at the end of a request and the clients send it along with the next one.
+This message is playfully named a "cookie".
+A cookie is bound to a host and path; it might have expiration time and other validation too.
+
+When a site is requested, the client looks to see if it has a valid cookie matching that host and path and if it does, it gets sent as a header along with the actual request.
+Then at then end of the request the server decides what if any data it needs to get on the next request in order to appear stateful.
+This data is sent back to the client, again via a header, and the value and validation critera are stored in a "cookie jar" for the next time they are needed.
+
+In Mojolicoius, the session uses a cookie to store state on the client side between requests.
+The controller has a session method which represents the data in the cookie as a hash reference, much like the stash.
+Simply use it as you would any other hash, but magically, at the end of the request, this data gets serialized to JSON, base 64 encoded, signed and stuffed in a cookie sent to the client.
+On the next request the data is verified, decoded and made available to the controller again, as if nothing happend.
+
+In the following example, we store the time of the first access in the session on the first request.
+From then on the value simply sits in the session, request after request, to be displayed next to the current time.
+
+```perl
+use Mojolicious::Lite;
+
+get '/' => sub {
+  my $c = shift;
+  my $first = $c->session->{first} ||= localtime;
+  $c->render(text => "You first visited at $first, the time is now " . localtime);
+};
+
+app->start;
+```
+
+The reader might notice that the request is signed and then later verified.
+This is important because since the data is stored on the client side, the client could in theory alter it.
+If what you store in the session is some identification, like a username, simply trusting the cookie could lead to all kinds of trouble.
+By signing the cookie cryptographically and then verifying it, we can know that the data hasn't been tampered with.
+If the validation fails, the application will simply see an empty session.
+
+Now for some caveats.
+The data is signed, but not encrypted, don't store private data in the session!
+Good session data might include a display name, a username, user roles, or perhaps a session token that can be used to look up private data in a database.
+Never store passwords in a session!
+Also, session cookies are limited in the same way that cookies are, most notably there is a size limit of 4kB in serialized form.
+If your application needs large amounts of session state, store a lookup id in the session storage and use it to lookup data in a database instead.
+
+
